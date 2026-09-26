@@ -1,36 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0e11">
+    <meta name="description" content="TradePro Terminal — live charts, order book, and fast order entry for crypto markets.">
     <title>TradePro Terminal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <script>
       window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
     </script>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
-    <nav class="sidebar">
-        <div class="logo">TradePro</div>
-        <ul>
-            <li>Dashboard</li>
-            <li>Markets</li>
-            <li>Portfolio</li>
-            <li>Settings</li>
-        </ul>
-    </nav>
-    <main class="dashboard">
-        <header>
-            <h1>BTC/USD <span class="price">$64,230.50</span></h1>
-            <div class="actions">
-                <button class="buy">BUY</button>
-                <button class="sell">SELL</button>
+    <div class="app">
+        <nav class="sidebar" aria-label="Primary">
+            <a href="#" class="logo" aria-label="TradePro home">
+                <span class="logo-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+                </span>
+                <span class="logo-text">TradePro</span>
+            </a>
+            <ul class="nav-list">
+                <li><a href="#" class="nav-item active" aria-current="page">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                    <span>Dashboard</span></a></li>
+                <li><a href="#" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
+                    <span>Markets</span></a></li>
+                <li><a href="#" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>
+                    <span>Portfolio</span></a></li>
+                <li><a href="#" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span>Settings</span></a></li>
+            </ul>
+            <div class="account">
+                <span class="avatar" aria-hidden="true">JD</span>
+                <div class="account-meta">
+                    <span class="account-name">Jordan Doe</span>
+                    <span class="account-sub">Pro account</span>
+                </div>
             </div>
-        </header>
-        <div class="chart-container" id="chart">
-            <!-- Chart placeholder -->
-            <canvas id="tradingChart"></canvas>
-        </div>
-    </main>
+        </nav>
+
+        <main class="dashboard">
+            <header class="topbar">
+                <div class="pair">
+                    <div class="pair-icon" id="pairIcon" aria-hidden="true">B</div>
+                    <div>
+                        <h1 class="pair-name" id="pairName">BTC/USD</h1>
+                        <span class="pair-sub" id="pairSub">Bitcoin</span>
+                    </div>
+                </div>
+                <div class="ticker">
+                    <span class="price mono" id="lastPrice" aria-live="polite">$64,230.50</span>
+                    <span class="change mono up" id="priceChange">+2.41%</span>
+                </div>
+                <dl class="stats">
+                    <div><dt>24h High</dt><dd class="mono" id="statHigh">—</dd></div>
+                    <div><dt>24h Low</dt><dd class="mono" id="statLow">—</dd></div>
+                    <div><dt>24h Volume</dt><dd class="mono" id="statVol">—</dd></div>
+                    <div class="balance"><dt>Balance</dt><dd class="mono" id="balance">$25,000.00</dd></div>
+                </dl>
+            </header>
+
+            <div class="grid">
+                <section class="panel chart-panel" aria-labelledby="chartTitle">
+                    <div class="panel-head">
+                        <h2 id="chartTitle" class="sr-only">Price chart</h2>
+                        <div class="segmented" role="tablist" aria-label="Timeframe" id="timeframes">
+                            <button role="tab" aria-selected="false" data-tf="1m">1m</button>
+                            <button role="tab" aria-selected="false" data-tf="5m">5m</button>
+                            <button role="tab" aria-selected="true" data-tf="1h">1H</button>
+                            <button role="tab" aria-selected="false" data-tf="4h">4H</button>
+                            <button role="tab" aria-selected="false" data-tf="1d">1D</button>
+                        </div>
+                        <div class="ohlc mono" id="ohlc" aria-hidden="true"></div>
+                    </div>
+                    <div class="chart-container" id="chart">
+                        <canvas id="tradingChart" role="img" aria-label="Candlestick price chart"></canvas>
+                    </div>
+                </section>
+
+                <section class="panel book-panel" aria-labelledby="bookTitle">
+                    <div class="panel-head">
+                        <h2 id="bookTitle" class="panel-title">Order Book</h2>
+                        <span class="muted small">Spread <span class="mono" id="spread">—</span></span>
+                    </div>
+                    <div class="book-cols muted small"><span>Price</span><span>Size</span><span>Total</span></div>
+                    <div class="book" id="asks"></div>
+                    <div class="book-mid mono" id="bookMid">—</div>
+                    <div class="book" id="bids"></div>
+                </section>
+
+                <section class="panel order-panel" aria-labelledby="orderTitle">
+                    <h2 id="orderTitle" class="sr-only">Place order</h2>
+                    <div class="side-toggle actions" role="tablist" aria-label="Order side">
+                        <button class="buy active" role="tab" aria-selected="true" data-side="buy">BUY</button>
+                        <button class="sell" role="tab" aria-selected="false" data-side="sell">SELL</button>
+                    </div>
+                    <form id="orderForm" class="order-form" novalidate>
+                        <div class="segmented small-seg" role="radiogroup" aria-label="Order type" id="orderType">
+                            <button type="button" role="radio" aria-checked="true" data-type="market">Market</button>
+                            <button type="button" role="radio" aria-checked="false" data-type="limit">Limit</button>
+                        </div>
+                        <label class="field" id="limitField" hidden>
+                            <span>Limit price</span>
+                            <div class="input-wrap"><input type="number" id="limitPrice" step="0.01" min="0" inputmode="decimal"><span class="unit">USD</span></div>
+                        </label>
+                        <label class="field">
+                            <span>Amount</span>
+                            <div class="input-wrap"><input type="number" id="amount" step="0.0001" min="0" placeholder="0.00" inputmode="decimal" required><span class="unit" id="amountUnit">BTC</span></div>
+                        </label>
+                        <div class="pct-row" role="group" aria-label="Portion of balance">
+                            <button type="button" data-pct="25">25%</button>
+                            <button type="button" data-pct="50">50%</button>
+                            <button type="button" data-pct="75">75%</button>
+                            <button type="button" data-pct="100">Max</button>
+                        </div>
+                        <div class="summary">
+                            <div><span class="muted">Est. total</span><span class="mono" id="orderTotal">$0.00</span></div>
+                            <div><span class="muted">Fee (0.1%)</span><span class="mono" id="orderFee">$0.00</span></div>
+                        </div>
+                        <p class="form-error" id="formError" role="alert"></p>
+                        <button type="submit" class="submit buy" id="submitBtn">Buy BTC</button>
+                    </form>
+                </section>
+
+                <section class="panel watch-panel" aria-labelledby="watchTitle">
+                    <div class="panel-head">
+                        <h2 id="watchTitle" class="panel-title">Watchlist</h2>
+                    </div>
+                    <ul class="watchlist" id="watchlist"></ul>
+                </section>
+
+                <section class="panel positions-panel" aria-labelledby="posTitle">
+                    <div class="panel-head">
+                        <div class="segmented" role="tablist" aria-label="Activity" id="activityTabs">
+                            <button role="tab" aria-selected="true" data-tab="positions" id="posTitle">Positions</button>
+                            <button role="tab" aria-selected="false" data-tab="trades">Market Trades</button>
+                        </div>
+                    </div>
+                    <div class="table-wrap" data-pane="positions">
+                        <table>
+                            <thead><tr><th scope="col">Pair</th><th scope="col">Side</th><th scope="col">Size</th><th scope="col">Entry</th><th scope="col">Mark</th><th scope="col">PnL</th></tr></thead>
+                            <tbody id="positions"></tbody>
+                        </table>
+                        <p class="empty muted" id="positionsEmpty">No open positions. Place an order to get started.</p>
+                    </div>
+                    <div class="table-wrap" data-pane="trades" hidden>
+                        <table>
+                            <thead><tr><th scope="col">Time</th><th scope="col">Price</th><th scope="col">Size</th></tr></thead>
+                            <tbody id="trades"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="script.js"></script>
 </body>
 </html>
