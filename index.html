@@ -1,36 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="TradePro Terminal — a fast, responsive trading dashboard with live charts, order book, and order entry.">
+    <meta name="theme-color" content="#0b0e11">
     <title>TradePro Terminal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <script>
       window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
     </script>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
-    <nav class="sidebar">
-        <div class="logo">TradePro</div>
-        <ul>
-            <li>Dashboard</li>
-            <li>Markets</li>
-            <li>Portfolio</li>
-            <li>Settings</li>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <nav class="sidebar" aria-label="Primary">
+        <div class="logo" aria-label="TradePro">
+            <span class="logo-mark" aria-hidden="true">T</span>
+            <span class="logo-text">TradePro</span>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <a href="#" class="nav-link active" aria-current="page">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>
+                    <span>Markets</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+                    <span>Portfolio</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+                    <span>Settings</span>
+                </a>
+            </li>
         </ul>
+        <div class="feed-status" role="status">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Simulated feed</span>
+        </div>
     </nav>
-    <main class="dashboard">
-        <header>
-            <h1>BTC/USD <span class="price">$64,230.50</span></h1>
+
+    <main class="dashboard" id="main">
+        <header class="ticker-bar">
+            <div class="ticker-main">
+                <h1 class="symbol" id="symbolName">BTC/USD</h1>
+                <p class="price mono" id="lastPrice" aria-live="off">$64,230.50</p>
+                <p class="change mono" id="change24">+0.00%</p>
+            </div>
+            <dl class="ticker-stats">
+                <div><dt>24h High</dt><dd class="mono" id="high24">—</dd></div>
+                <div><dt>24h Low</dt><dd class="mono" id="low24">—</dd></div>
+                <div><dt>24h Volume</dt><dd class="mono" id="vol24">—</dd></div>
+            </dl>
             <div class="actions">
-                <button class="buy">BUY</button>
-                <button class="sell">SELL</button>
+                <button type="button" class="btn buy" data-quick-side="buy">Buy</button>
+                <button type="button" class="btn sell" data-quick-side="sell">Sell</button>
             </div>
         </header>
-        <div class="chart-container" id="chart">
-            <!-- Chart placeholder -->
-            <canvas id="tradingChart"></canvas>
+
+        <div class="grid">
+            <section class="panel chart-panel" aria-labelledby="chartTitle">
+                <div class="panel-head">
+                    <h2 id="chartTitle" class="sr-only">Price chart</h2>
+                    <div class="segmented" role="group" aria-label="Timeframe" id="timeframes">
+                        <button type="button" data-tf="1m">1m</button>
+                        <button type="button" data-tf="5m">5m</button>
+                        <button type="button" data-tf="15m" aria-pressed="true">15m</button>
+                        <button type="button" data-tf="1h">1H</button>
+                        <button type="button" data-tf="4h">4H</button>
+                        <button type="button" data-tf="1d">1D</button>
+                    </div>
+                    <p class="ohlc mono" id="ohlc" aria-live="off"></p>
+                </div>
+                <div class="chart-container" id="chart">
+                    <canvas id="tradingChart" role="img" aria-label="Candlestick price chart"></canvas>
+                </div>
+            </section>
+
+            <section class="panel book-panel" aria-labelledby="bookTitle">
+                <div class="panel-head">
+                    <h2 id="bookTitle">Order Book</h2>
+                </div>
+                <div class="book-cols" aria-hidden="true">
+                    <span>Price</span><span>Size</span><span>Total</span>
+                </div>
+                <ol class="book asks mono" id="asks" aria-label="Asks"></ol>
+                <div class="spread mono">
+                    <span id="bookPrice">—</span>
+                    <span class="muted" id="spread">Spread —</span>
+                </div>
+                <ol class="book bids mono" id="bids" aria-label="Bids"></ol>
+            </section>
+
+            <section class="panel form-panel" aria-labelledby="formTitle">
+                <h2 id="formTitle" class="sr-only">Place order</h2>
+                <div class="side-toggle" role="group" aria-label="Order side">
+                    <button type="button" class="side-btn" data-side="buy" aria-pressed="true">Buy</button>
+                    <button type="button" class="side-btn" data-side="sell" aria-pressed="false">Sell</button>
+                </div>
+                <form id="orderForm" class="order-form" novalidate>
+                    <div class="segmented full" role="group" aria-label="Order type">
+                        <button type="button" data-type="limit" aria-pressed="true">Limit</button>
+                        <button type="button" data-type="market" aria-pressed="false">Market</button>
+                    </div>
+
+                    <p class="available">
+                        <span class="muted">Available</span>
+                        <span class="mono" id="available">—</span>
+                    </p>
+
+                    <label class="field">
+                        <span>Price</span>
+                        <span class="input-wrap">
+                            <input type="number" id="priceInput" inputmode="decimal" min="0" step="any" autocomplete="off">
+                            <span class="unit">USD</span>
+                        </span>
+                    </label>
+
+                    <label class="field">
+                        <span>Amount</span>
+                        <span class="input-wrap">
+                            <input type="number" id="amountInput" inputmode="decimal" min="0" step="any" placeholder="0.00" autocomplete="off">
+                            <span class="unit" id="baseUnit">BTC</span>
+                        </span>
+                    </label>
+
+                    <div class="pct" role="group" aria-label="Portion of available balance">
+                        <button type="button" data-pct="25">25%</button>
+                        <button type="button" data-pct="50">50%</button>
+                        <button type="button" data-pct="75">75%</button>
+                        <button type="button" data-pct="100">Max</button>
+                    </div>
+
+                    <p class="total">
+                        <span class="muted">Total</span>
+                        <span class="mono" id="orderTotal">$0.00</span>
+                    </p>
+
+                    <p class="form-error" id="formError" role="alert"></p>
+
+                    <button type="submit" class="btn submit buy" id="submitBtn">Buy BTC</button>
+                </form>
+            </section>
+
+            <section class="panel trades-panel" aria-labelledby="tradesTitle">
+                <div class="panel-head">
+                    <h2 id="tradesTitle">Recent Trades</h2>
+                </div>
+                <div class="book-cols" aria-hidden="true">
+                    <span>Price</span><span>Size</span><span>Time</span>
+                </div>
+                <ol class="trades mono" id="trades"></ol>
+            </section>
+
+            <section class="panel watch-panel" aria-labelledby="watchTitle">
+                <div class="panel-head">
+                    <h2 id="watchTitle">Watchlist</h2>
+                </div>
+                <ul class="watchlist" id="watchlist"></ul>
+            </section>
+
+            <section class="panel tabs-panel" aria-label="Account">
+                <div class="tabs" role="tablist" aria-label="Account views">
+                    <button type="button" role="tab" id="tab-open" aria-controls="view-open" aria-selected="true">Open Orders <span class="count" id="openCount">0</span></button>
+                    <button type="button" role="tab" id="tab-history" aria-controls="view-history" aria-selected="false" tabindex="-1">Order History</button>
+                    <button type="button" role="tab" id="tab-balances" aria-controls="view-balances" aria-selected="false" tabindex="-1">Balances</button>
+                </div>
+                <div class="table-wrap" role="tabpanel" id="view-open" aria-labelledby="tab-open">
+                    <table>
+                        <thead><tr><th scope="col">Time</th><th scope="col">Pair</th><th scope="col">Side</th><th scope="col">Price</th><th scope="col">Amount</th><th scope="col">Total</th><th scope="col"><span class="sr-only">Actions</span></th></tr></thead>
+                        <tbody id="openOrders"></tbody>
+                    </table>
+                </div>
+                <div class="table-wrap" role="tabpanel" id="view-history" aria-labelledby="tab-history" hidden>
+                    <table>
+                        <thead><tr><th scope="col">Time</th><th scope="col">Pair</th><th scope="col">Side</th><th scope="col">Type</th><th scope="col">Price</th><th scope="col">Amount</th><th scope="col">Status</th></tr></thead>
+                        <tbody id="orderHistory"></tbody>
+                    </table>
+                </div>
+                <div class="table-wrap" role="tabpanel" id="view-balances" aria-labelledby="tab-balances" hidden>
+                    <table>
+                        <thead><tr><th scope="col">Asset</th><th scope="col">Free</th><th scope="col">In orders</th><th scope="col">Value (USD)</th></tr></thead>
+                        <tbody id="balances"></tbody>
+                    </table>
+                </div>
+            </section>
         </div>
     </main>
+
+    <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
     <script src="script.js"></script>
 </body>
 </html>
